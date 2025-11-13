@@ -1,5 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { TeslaModel3 } from "./TeslaModel3";
+import { Stage } from "@react-three/drei";
 
 export const Experience = () => {
   return (
@@ -13,7 +14,9 @@ export const Experience = () => {
         minDistance={6}
       />
       <ambientLight intensity={0.4} />
-      <TeslaModel3 scale={0.012} position-z={0.6} />
+      <Stage intensity={0.01} preset={"upfront"} environment={"studio"}>
+        <TeslaModel3 scale={0.012} position-z={0.6} />
+      </Stage>
     </>
   );
 };
