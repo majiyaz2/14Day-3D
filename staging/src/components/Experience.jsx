@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { MeshReflectorMaterial, OrbitControls } from "@react-three/drei";
 import { TeslaModel3 } from "./TeslaModel3";
 import { Stage } from "@react-three/drei";
 
@@ -20,7 +20,7 @@ export const Experience = () => {
 
       <mesh position={[0, -1.18, 0]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial  color={"white"}/>
+        <MeshReflectorMaterial color={"white"} resolution={1024} roughness={0.6} mixStrength={10} />
       </mesh>
     </>
   );
