@@ -2,6 +2,7 @@ import { Environment, MeshReflectorMaterial, OrbitControls } from "@react-three/
 import { TeslaModel3 } from "./TeslaModel3";
 import { Stage } from "@react-three/drei";
 import { Background } from "./Background";
+import { Lights } from "./Lights";
 
 export const Experience = () => {
   return (
@@ -15,8 +16,8 @@ export const Experience = () => {
         minDistance={6}
       />
       <ambientLight intensity={0.4} />
-      <Environment>
-        <Background />
+      <Environment background>
+        <Lights />
       </Environment>
       <TeslaModel3 scale={0.012} position-z={0.6} />
 
