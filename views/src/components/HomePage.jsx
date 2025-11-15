@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Hero } from "./Hero";
+import { Canvas } from "@react-three/fiber";
+import { Hero3D } from "./Hero3D";
+import { View } from "@react-three/drei";
 
 export const HomePage = () => {
   const [scrolled, setScrolled] = useState(false);
+  const heroContainer = useRef()
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 12);
@@ -16,6 +20,14 @@ export const HomePage = () => {
 
   return (
     <main>
+      <Canvas
+        className="canvas"
+        camera={{ position: [0, 0, 1.5], fov: 30 }}
+      >
+        <View track={heroContainer}>
+          <Hero3D />
+        </View>
+      </Canvas>
       <header className={`header ${scrolled ? "header--scrolled" : ""}`}>
         <div className="header__menu">
           <a href="#hero" className="header__menu__item">
@@ -36,7 +48,7 @@ export const HomePage = () => {
         </div>
       </header>
 
-      <Hero />
+      <Hero ref={heroContainer} />
       <section className="services" id="services">
         <h2 className="services__title">Our Services</h2>
         <div className="services__slider">
