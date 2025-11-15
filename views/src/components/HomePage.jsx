@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Hero } from "./Hero";
 import { Canvas } from "@react-three/fiber";
 import { Hero3D } from "./Hero3D";
-import { View } from "@react-three/drei";
-
+import { Environment, View } from "@react-three/drei";
+import { Services3D } from "./Services3D";
+import {TeamMember} from "./TeamMember"
+import {degToRad} from "three/src/math/MathUtils.js"
+import {Portfolio3D} from "./Portfolio3D"
 export const HomePage = () => {
   const [scrolled, setScrolled] = useState(false);
   const heroContainer = useRef()
@@ -34,6 +37,37 @@ export const HomePage = () => {
         <View track={heroContainer}>
           <Hero3D />
         </View>
+        <View track={servicesContainer}>
+          <Services3D currentService={currentService} />
+        </View>
+        <View track={johnDoeContainer}>
+          <TeamMember
+            model="Suit"
+            position-y={-1.5}
+            rotation-y={-degToRad(20)}
+            />
+            <Environment preset="sunset" />
+          </View>
+          <View track={juliaDoeContainer}>
+            <TeamMember
+              model="Formal"
+              position-y={-1.5}
+              rotation-y={degToRad(20)}
+              />
+              <Environment preset="sunset" />
+            </View>
+            <View track={lindaDoeContainer}>
+              <TeamMember
+                model="Casual"
+                position-y={-1.5}
+                rotation-y={-degToRad(20)}
+                />
+                <Environment preset="sunset" />
+            </View>
+            <View track={portfolioContainer}>
+              <Portfolio3D />
+            </View>
+
         
       </Canvas>
       <header className={`header ${scrolled ? "header--scrolled" : ""}`}>
