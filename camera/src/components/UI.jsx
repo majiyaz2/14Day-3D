@@ -41,10 +41,12 @@ export const UI = ({ section, onSectionChange }) => {
             }`}
           >
             <h1 className="text-2xl font-medium text-stone-100">
-              iPhone 15 Pro Max
+              iPhone 17 Pro Max
             </h1>
             <p className="text-4xl md:text-6xl font-extrabold text-white">
-              Titanium
+              Super Retina XDR
+              <br />
+              6.3-inch Display
             </p>
           </section>
           <section
@@ -53,11 +55,10 @@ export const UI = ({ section, onSectionChange }) => {
             }`}
           >
             <h1 className="text-2xl font-medium text-stone-100">
-              New titanium body
+              Ceramic Shield 2
             </h1>
             <p className="text-white">
-              Titanium armor for your iPhone . More durable than any smartphone
-              glass.
+              Tougher than any smartphone glass with 3x better scratch resistance. Durable design that stays beautiful.
             </p>
           </section>
           <section
@@ -66,10 +67,10 @@ export const UI = ({ section, onSectionChange }) => {
             }`}
           >
             <h1 className="text-2xl font-medium text-stone-100">
-              Professional camera
+              48MP Dual Cameras
             </h1>
             <p className="text-white">
-              Capture your best life moments with its 48MP main camera.
+              48MP Fusion main camera with 2x optical zoom and 48MP Ultra Wide. Stunning high-resolution shots in any light.
             </p>
           </section>
           <section
