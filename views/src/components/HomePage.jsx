@@ -15,6 +15,7 @@ export const HomePage = () => {
   const juliaDoeContainer = useRef()
   const lindaDoeContainer = useRef()
   const portfolioContainer = useRef()
+  const container = useRef()
   
   
   useEffect(() => {
@@ -29,9 +30,10 @@ export const HomePage = () => {
   const [currentService, setCurrentService] = useState(0);
 
   return (
-    <main>
+    <main ref={container}>
       <Canvas
         className="canvas"
+        eventSource={container}
         camera={{ position: [0, 0, 1.5], fov: 30 }}
       >
         <View track={heroContainer}>
