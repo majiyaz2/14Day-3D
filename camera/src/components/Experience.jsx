@@ -94,9 +94,7 @@ export const Experience = ({section}) => {
     0.4981142167933199,
     0.0005141969276344199
 ],
-    chip: [0, 0, 7, 0, 0, 0],
-    display: [0, 0, 2, 0, 0, 0],
-    battery: [0, 0, 1, 0, 0, 0],
+   
   }
 
   const intro = async () => {
@@ -122,7 +120,20 @@ export const Experience = ({section}) => {
   }, [section])
   return (
     <>
-      <CameraControls ref={controls} />
+      <CameraControls 
+        ref={controls}
+        mouseButtons={{
+            left:0,
+            middle:0,
+            right:0,
+            wheel:0
+        }}
+        touches={{
+          one: 0,
+          two:0,
+          three:0,
+        }}
+      />
       <Gltf
         position={[0, 0, 0]}
         scale={5}  
