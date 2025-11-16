@@ -3,6 +3,7 @@ import {
   Environment,
   Gltf,
   OrbitControls,
+  PerspectiveCamera,
   Sky,
   useFBO,
   useVideoTexture,
@@ -11,20 +12,76 @@ import { Vector3 } from "three";
 import { Avatar } from "./Avatar";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-
+import {useRemote} from "../hooks/useRemote"
 const VECTOR_ZERO = new Vector3(0, 0, 0);
 
 export const Experience = () => {
+
+  const {mode} = useRemote()
+  const frontCamera = useRef();
+  const frontRenderTarget = useFBO()
+  
+  const topCamera = useRef();
+  const topRenderTarget = useFBO()
+  
+  const cornerCamera = useRef();
   const cornerRenderTarget = useFBO()
-  const bufferRenderTarget = useFBO()
+  
   const tvMaterial = useRef()
   const videoTexture = useVideoTexture("/textures/bounce-patrick.mp4");
+  
+  
   useFrame(({gl, camera, scene}) => {
+    topCamera.current.lookAt(VECTOR_ZERO)
+    cornerCamera.current.lookAt(VECTOR_ZERO)
+    frontCamera.current.lookAt(VECTOR_ZERO)
+    
     tvMaterial.current.map = videoTexture
-    gl.setRenderTarget(cornerRenderTarget)
-    gl.render(scene, camera)
+    
+    let currentScreenTexture = videoTexture
+
+    if(mode === "top"){
+      currentScreenTexture = topRenderTarget.texture
+      gl.setRenderTarget(topRenderTarget)
+      gl.render(scene, topCamera.current)      
+    }
+    
+    if(mode === "corner"){
+      currentScreenTexture = cornerRenderTarget.texture
+      gl.setRenderTarget(cornerRenderTarget)
+      gl.render(scene, cornerCamera.current)      
+    }
+    
+    if(mode === "front"){
+      currentScreenTexture = frontRenderTarget.texture
+      scene.traverse((node) => {
+        if(node.morphTargetInfluences){
+          node.morphTargetInfluences[
+            node.morphTargetDictionary["mouthSmile"]
+          ] = 1
+          node.morphTargetInfluences[
+            node.morphTargetDictionary["mouthOpen"]
+          ] = 1
+        }
+      })
+      
+      gl.setRenderTarget(frontRenderTarget)
+      gl.render(scene, frontCamera.current)      
+    }
+
     gl.setRenderTarget(null)
-    tvMaterial.current.map = cornerRenderTarget.texture
+
+    tvMaterial.current.map = currentScreenTexture
+    scene.traverse((node) => {
+        if(node.morphTargetInfluences){
+          node.morphTargetInfluences[
+            node.morphTargetDictionary["mouthSmile"]
+          ] = 0
+          node.morphTargetInfluences[
+            node.morphTargetDictionary["mouthOpen"]
+          ] = 0
+        }
+      })
   })
   
   return (
@@ -34,6 +91,26 @@ export const Experience = () => {
         minDistance={2}
         maxDistance={5}
       />
+
+      <PerspectiveCamera
+        position={[0, 0, -0.3]}
+        fov={50}
+        near={0.1}
+        ref={frontCamera}
+      />
+      <PerspectiveCamera
+        position={[0, 2.2, 0]}
+        fov={30}
+        near={0.1}
+        ref={topCamera}
+      />
+      <PerspectiveCamera
+        position={[2, 1.2, 2]}
+        fov={30}
+        near={0.1}
+        ref={cornerCamera}
+      />
+
       <group position-y={-0.5}>
         <group>
           <Sky />
