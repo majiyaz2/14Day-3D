@@ -16,9 +16,11 @@ const VECTOR_ZERO = new Vector3(0, 0, 0);
 
 export const Experience = () => {
   const cornerRenderTarget = useFBO()
+  const bufferRenderTarget = useFBO()
   const tvMaterial = useRef()
   const videoTexture = useVideoTexture("/textures/bounce-patrick.mp4");
   useFrame(({gl, camera, scene}) => {
+    tvMaterial.current.map = videoTexture
     gl.setRenderTarget(cornerRenderTarget)
     gl.render(scene, camera)
     gl.setRenderTarget(null)
