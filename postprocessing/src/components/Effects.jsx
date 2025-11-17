@@ -36,14 +36,15 @@ export const Effects = () => {
     
   });
 
-  const autofocus = useControls("autofocus", {
-    enabled: true,
+  const autofocusConfig = useControls("autofocus", {
+    enabled: false,
     mouse: true,
     focusRange: { value: 0.001, min: 0, max: 0.01 },
-    bokehScale: { value: 0.8, min: 0, max: 1},
+    bokehScale: { value: 8, min: 0, max: 40 },
     focalLength: { value: 0.8, min: 0, max: 1 },
     smoothTime: { value: 0.5, min: 0, max: 1 },
-  })
+  });
+
 
   return (
     <EffectComposer disableNormalPass>
@@ -52,7 +53,7 @@ export const Effects = () => {
       {brightnessContrastConfig.enabled && <BrightnessContrast {...brightnessContrastConfig} />}
       {sepiaConfig.enabled && <Sepia {...sepiaConfig} blendFunction={BlendFunction[sepiaConfig.blendFunction]} />}
       {noiseConfig.enabled && <Noise {...noiseConfig} />}
-      {autofocus.enabled && <Autofocus {...autofocus} />}
+       {autofocusConfig.enabled && <Autofocus {...autofocusConfig} />}
     </EffectComposer>
   );
 };
