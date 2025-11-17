@@ -1,8 +1,5 @@
-import { EffectComposer, Sepia } from "@react-three/postprocessing";
-import { Vignette } from "@react-three/postprocessing";
+import { Autofocus, Vignette, EffectComposer, Noise, Sepia, Bloom, BrightnessContrast } from "@react-three/postprocessing";
 import { useControls } from "leva"; 
-import { Bloom } from "@react-three/postprocessing";
-import { BrightnessContrast } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 
 export const Effects = () => {
@@ -28,10 +25,25 @@ export const Effects = () => {
   const sepiaConfig = useControls("sepia", {
     enabled: true,
     blendFunction: {
-        value: "Darken",
+        value: "DARKEN",
         options: Object.keys(BlendFunction)
     }
   });
+
+  const noiseConfig = useControls("noise", {
+    enabled: true,
+    opacity: { value: 0.1, min: 0, max: 1 },
+    
+  });
+
+  const autofocus = useControls("autofocus", {
+    enabled: true,
+    mouse: true,
+    focusRange: { value: 0.001, min: 0, max: 0.01 },
+    bokehScale: { value: 0.8, min: 0, max: 1},
+    focalLength: { value: 0.8, min: 0, max: 1 },
+    smoothTime: { value: 0.5, min: 0, max: 1 },
+  })
 
   return (
     <EffectComposer disableNormalPass>
@@ -39,7 +51,8 @@ export const Effects = () => {
       {bloomConfig.enabled && <Bloom {...bloomConfig} />}
       {brightnessContrastConfig.enabled && <BrightnessContrast {...brightnessContrastConfig} />}
       {sepiaConfig.enabled && <Sepia {...sepiaConfig} blendFunction={BlendFunction[sepiaConfig.blendFunction]} />}
-
+      {noiseConfig.enabled && <Noise {...noiseConfig} />}
+      {autofocus.enabled && <Autofocus {...autofocus} />}
     </EffectComposer>
   );
 };
