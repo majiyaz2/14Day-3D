@@ -1,8 +1,9 @@
-import { EffectComposer } from "@react-three/postprocessing";
+import { EffectComposer, Sepia } from "@react-three/postprocessing";
 import { Vignette } from "@react-three/postprocessing";
 import { useControls } from "leva"; 
 import { Bloom } from "@react-three/postprocessing";
 import { BrightnessContrast } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 
 export const Effects = () => {
   const vignetteConfig = useControls("vignette", {
@@ -24,11 +25,20 @@ export const Effects = () => {
     contrast: { value: -0.1, min: -1, max: 1 },
   });
 
+  const sepiaConfig = useControls("sepia", {
+    enabled: true,
+    blendFunction: {
+        value: "Darken",
+        options: Object.keys(BlendFunction)
+    }
+  });
+
   return (
     <EffectComposer disableNormalPass>
       {vignetteConfig.enabled && <Vignette {...vignetteConfig} />}
       {bloomConfig.enabled && <Bloom {...bloomConfig} />}
       {brightnessContrastConfig.enabled && <BrightnessContrast {...brightnessContrastConfig} />}
+      {sepiaConfig.enabled && <Sepia {...sepiaConfig} blendFunction={BlendFunction[sepiaConfig.blendFunction]} />}
 
     </EffectComposer>
   );
