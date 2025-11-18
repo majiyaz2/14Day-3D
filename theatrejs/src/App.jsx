@@ -3,6 +3,16 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import { UI } from "./UI";
 import { Experience } from "./components/Experience";
+import { getProject } from "@theatre/core";
+import { SheetProvider } from "@theatre/r3f";
+import studio from "@theatre/studio";
+import extension from "@theatre/r3f/dist/extension"
+
+studio.initialize();
+studio.extend(extension);
+
+const project = getProject('MedievalTown');
+const mainSheet = project.sheet('Main');
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState("Intro");
@@ -17,7 +27,9 @@ function App() {
       />
       <Canvas camera={{ position: [5, 5, 10], fov: 30, near: 1 }} shadows>
         <SoftShadows />
-        <Experience />
+        <SheetProvider sheet={mainSheet}>
+          <Experience />  
+        </SheetProvider>
       </Canvas>
     </>
   );
