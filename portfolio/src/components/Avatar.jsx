@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
+import { useAnimations, useFBX, useGLTF, useScroll } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber';
+import * as THREE from "three";
 
 export function Avatar(props) {
   const { nodes, materials } = useGLTF('/models/693143bd76dccadf3d05ea03.glb')
-const { animations: idleAnimation } = useFBX("/animations/Idle.fbx");
+  const { animations: idleAnimation } = useFBX("/animations/Idle.fbx");
   const { animations: walkingAnimation } = useFBX("/animations/Walking.fbx");
   const { animations: runningAnimation } = useFBX("/animations/Running.fbx");
+
+  const scrollData = useScroll()
+  const lastScroll = useRef(0)
 
   idleAnimation[0].name = 'Idle'
   walkingAnimation[0].name = 'Walking'
@@ -17,14 +22,36 @@ const { animations: idleAnimation } = useFBX("/animations/Idle.fbx");
     group
   )
 
-  const [animation, setAnimation] = useState('Running')
+  const [animation, setAnimation] = useState('Idle')
 
   useEffect(() => {
     actions[animation].reset().fadeIn(0.5).play()
     return () => {
-      actions[animation].fadeOut(0.5)
+      actions[animation].fadeOut(0.5).play()
     }
   }, [animation])
+
+  useFrame(() => {
+    const scrollDelta = scrollData.offset - lastScroll.current
+    let rotation = 0
+    if (Math.abs(scrollDelta) > 0.00001) {
+      if(scrollDelta > 0){
+        setAnimation('Walking')
+        rotation = 0
+      }else{
+        setAnimation('Running')
+        rotation = Math.PI
+      }
+    }else{
+      setAnimation('Idle')
+    }
+    group.current.rotation.y = THREE.MathUtils.lerp(
+      group.current.rotation.y, 
+      rotation, 
+      0.1
+    )
+    lastScroll.current = scrollData.offset
+  })
   return (
     <group {...props} dispose={null} ref={group}>
       <primitive object={nodes.Hips} />
