@@ -1,8 +1,13 @@
-import { Environment, useScroll } from "@react-three/drei";
+import { Center, Environment, Float, useScroll } from "@react-three/drei";
 import { Avatar } from "./Avatar";
 import { useRef } from "react";
 import { SectionTitle } from "./SectionTitle";
 import { useFrame } from "@react-three/fiber";
+import { Star } from "./Star";
+import { MacBookPro } from "./MacBookPro";
+import { PalmTree } from "./PalmTree";
+import * as THREE from "three"
+import { config } from "../config";
 
 const SECTIONS_DISTANCE = 10
 
@@ -21,7 +26,45 @@ export const Experience = () => {
       <group ref={sceneContainer}>
         {/* Home */}
         <group>
-          <SectionTitle position-x={0.5}>Home</SectionTitle>
+          <Star position-z={0} position-y={2.2} scale={0.3}/>
+          <Float floatIntensity={2} speed={2}>
+            <MacBookPro
+              position={[-1, 0.5, 0]}
+              scale={0.3}
+              rotation={[0, Math.PI / 4, 0]}
+            />
+          </Float>
+          <PalmTree 
+            position={[4, 0, -5]}
+            scale={0.018}
+            rotation-y={THREE.MathUtils.degToRad(140)}
+          />
+          <Float floatIntensity={0.6}>
+            <Center disableY disableZ>
+              <SectionTitle
+                size={0.8}
+                position-y={1.6}
+                position-z={-3}
+                bevelEnabled
+                bevelThickness={0.3}
+                // bevelSize={0.02}
+              >
+                {config.home.title}
+              </SectionTitle>
+            </Center>
+          </Float>
+          <Center disableY disableZ>
+              <SectionTitle
+                size={1.2}
+                position-x={2.6}
+                position-z={-3}
+                bevelEnabled
+                rotation-y={Math.PI / 10}
+                // bevelSize={0.02}
+              >
+                {config.home.subtitle}
+              </SectionTitle>
+            </Center>
         </group>
         {/* Skills */}
         <group position-z={SECTIONS_DISTANCE * 1}>
