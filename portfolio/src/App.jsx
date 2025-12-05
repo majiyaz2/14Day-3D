@@ -12,7 +12,7 @@ function App() {
         <ScrollControls
           pages={config.sections.length}
           damping={0.1}
-          maxSpeed={0.2}
+          maxSpeed={1}
         >
           <group position-y={-1}>
             <Experience />
