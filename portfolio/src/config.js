@@ -3,5 +3,8 @@ export const config = {
     home: {
         title: "Andile",
         subtitle: "Mhlongo",
+    },
+    contact: {
+        mail: "majiyaz2@gmail.com"
     }
 }
