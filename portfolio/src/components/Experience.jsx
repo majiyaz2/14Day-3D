@@ -1,4 +1,4 @@
-import { Center, Environment, Float, useScroll } from "@react-three/drei";
+import { Center, Environment, Float, MeshDistortMaterial, useScroll } from "@react-three/drei";
 import { Avatar } from "./Avatar";
 import { useRef } from "react";
 import { SectionTitle } from "./SectionTitle";
@@ -6,6 +6,9 @@ import { useFrame } from "@react-three/fiber";
 import { Star } from "./Star";
 import { MacBookPro } from "./MacBookPro";
 import { PalmTree } from "./PalmTree";
+import { BookCase } from "./BookCase";
+import { CouchSmall } from "./CouchSmall";
+import { Lamp } from "./Lamp"
 import * as THREE from "three"
 import { config } from "../config";
 
@@ -68,7 +71,35 @@ export const Experience = () => {
         </group>
         {/* Skills */}
         <group position-z={SECTIONS_DISTANCE * 1}>
-          <SectionTitle position-x={0.5}>Skills</SectionTitle>
+          <group position-x={-2}>
+
+            <SectionTitle position-z={1.5} rotation-y={Math.PI / 6}>Skills</SectionTitle>
+            <BookCase position-z={-2} />
+            <CouchSmall
+              scale={0.4}
+              position-z={0}
+              position-x={-0.2}
+              rotation-y={Math.PI / 3}
+
+            />
+            <Lamp
+              position-z={0.6}
+              position-x={-0.4}
+              position-y={-0.8}
+              rotation-y={-Math.PI}
+
+            />
+          </group>
+          <mesh position={[2,2,-4]}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <MeshDistortMaterial
+              opacity={0.8}
+              transparent
+              distort={1}
+              speed={5}
+              color={"yellow"}
+            />
+          </mesh>
         </group>
         {/* Projects */}
         <group position-z={SECTIONS_DISTANCE * 2}>
