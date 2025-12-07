@@ -1,4 +1,4 @@
-import { Center, Environment, Float, MeshDistortMaterial, useScroll } from "@react-three/drei";
+import { Center, Environment, Float, MeshDistortMaterial, RoundedBox, useScroll } from "@react-three/drei";
 import { Avatar } from "./Avatar";
 import { useRef } from "react";
 import { SectionTitle } from "./SectionTitle";
@@ -9,6 +9,8 @@ import { PalmTree } from "./PalmTree";
 import { BookCase } from "./BookCase";
 import { CouchSmall } from "./CouchSmall";
 import { Lamp } from "./Lamp"
+import { Monitor } from "./Monitor"
+
 import * as THREE from "three"
 import { config } from "../config";
 
@@ -103,7 +105,31 @@ export const Experience = () => {
         </group>
         {/* Projects */}
         <group position-z={SECTIONS_DISTANCE * 2}>
-          <SectionTitle position-x={0.5}>Projects</SectionTitle>
+          <group position-x={1}>
+            <SectionTitle 
+              position-x={-0.5}
+              position-z={0}
+              rotation-y={-Math.PI / 6}
+              >
+              Projects
+            </SectionTitle>
+            <group
+              position-x={0.5}
+              position-z={0}
+              rotation-y={-Math.PI / 6}
+              scale={0.8}
+            >
+              <Monitor
+                scale={0.02}
+                position-y={1}
+                rotation-y={-Math.PI / 2}
+                position-z={-1}
+              />
+              <RoundedBox scale-x={2} position-y={0.5} position-z={-1}>
+                <meshStandardMaterial color={"white"}/>
+              </RoundedBox>
+            </group>
+          </group>
         </group>
         {/* Contact */}
         <group position-z={SECTIONS_DISTANCE * 3}>
