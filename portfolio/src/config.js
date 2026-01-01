@@ -50,6 +50,15 @@ export const config = {
       link: "https://www.youtube.com/watch?v=pGMKIyALcK0",
     },
   ],
+  contact: {
+    name: "Andile Mhlongo",
+    address: "Johannesburg, South Africa",
+    socials: {
+      linkedin: "https://www.linkedin.com/in/andile-mhlongo-a025a5b1/",
+      twitter: "https://twitter.com/majiyaz2",
+    },
+    mail: "majiyaz2@gmail.com",
+  },
 
 
 }
