@@ -1,7 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
-import { ScrollControls } from "@react-three/drei";
+import { Scroll, ScrollControls } from "@react-three/drei";
 import { config } from "./config";
+import { Interface } from "./components/Interface";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           <group position-y={-1}>
             <Experience />
           </group>
+          <Scroll html>
+            <Interface/>
+          </Scroll>
         </ScrollControls>
       </Canvas>
     </>
