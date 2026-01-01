@@ -3,6 +3,7 @@ import { Experience } from "./components/Experience";
 import { Scroll, ScrollControls } from "@react-three/drei";
 import { config } from "./config";
 import { Interface } from "./components/Interface";
+import { MotionConfig } from "framer-motion";
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
             <Experience />
           </group>
           <Scroll html>
-            <Interface/>
+            <MotionConfig transition={{
+              duration: 1
+            }}>
+              <Interface/>
+            </MotionConfig>
           </Scroll>
         </ScrollControls>
       </Canvas>

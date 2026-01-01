@@ -69,11 +69,11 @@ export const Experience = () => {
             scale={0.018}
             rotation-y={THREE.MathUtils.degToRad(140)}
           />
-          <Float floatIntensity={0.6}>
+          <Float floatIntensity={0.3}>
             <Center disableY disableZ>
               <SectionTitle
                 size={0.8}
-                position-y={1.6}
+                position-y={1.9}
                 position-z={-3}
                 bevelEnabled
                 bevelThickness={0.3}
@@ -88,6 +88,7 @@ export const Experience = () => {
                 size={1.2}
                 position-x={2.6}
                 position-z={-3}
+                position-y={0.4}
                 bevelEnabled
                 rotation-y={Math.PI / 10}
                 // bevelSize={0.02}
