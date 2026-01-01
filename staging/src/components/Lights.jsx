@@ -6,7 +6,7 @@ export const Lights = () => {
             <Float>
                 <Lightformer
                     form={"ring"}
-                    intensity={2}
+                    intensity={20}
                     position={[-3, 3, -2]}
                     scale={[3,3,1]}
                     target={[0,0,0]}
@@ -23,7 +23,7 @@ export const Lights = () => {
             {/* LEFT */}
             <Lightformer
                 form={"ring"}
-                intensity={4}
+                intensity={20}
                 position={[-5, 2, 0]}
                 scale={[10, 1 , 1]}
                 target={[0, 0, 0]}

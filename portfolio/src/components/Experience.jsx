@@ -1,12 +1,14 @@
-import { Center, Environment, Float, MeshDistortMaterial, RoundedBox, useScroll } from "@react-three/drei";
+import { Center, ContactShadows, Environment, Float, MeshDistortMaterial, RoundedBox, useScroll } from "@react-three/drei";
+import {motion} from "framer-motion-3d"
+
 import { Avatar } from "./Avatar";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SectionTitle } from "./SectionTitle";
 import { useFrame } from "@react-three/fiber";
 import { Star } from "./Star";
 import { MacBookPro } from "./MacBookPro";
 import { PalmTree } from "./PalmTree";
-import { BookCase } from "./BookCase";
+// import { BookCase } from "./BookCase";
 import { CouchSmall } from "./CouchSmall";
 import { Lamp } from "./Lamp"
 import { Monitor } from "./Monitor"
@@ -16,24 +18,44 @@ import { ParkBench } from "./ParkBench";
 import { Pigeon } from "./Pigeon";
 import * as THREE from "three"
 import { config } from "../config";
+import { Lights } from "../../../staging/src/components/Lights";
 
 const SECTIONS_DISTANCE = 10
 
 export const Experience = () => {
   const sceneContainer = useRef()
   const scrollData = useScroll()
-
+  const [section, setSection] = useState(config.sections[0]);
   useFrame(() => {
     sceneContainer.current.position.z = -scrollData.offset * SECTIONS_DISTANCE * (scrollData.pages - 1)
+     setSection(
+      config.sections[Math.round(scrollData.offset * (scrollData.pages - 1))]
+    );
   })
+
   return (
     <>
-      <Environment preset="sunset" />
+      <Environment>
+        <Lights/>
+      </Environment>
       <Avatar />
 
-      <group ref={sceneContainer}>
+      <ContactShadows opacity={0.5} scale={[30, 30]} color="#9c8e66" />
+      <mesh position-y={-0.001} rotation-x={-Math.PI / 2}>
+          <planeGeometry args={[100, 100]}/>
+          <meshBasicMaterial color="#f5f3ee"/>
+      </mesh>
+
+      <motion.group ref={sceneContainer} animate={section}>
         {/* Home */}
-        <group>
+        <motion.group
+          position-y={-5}
+          variants={{
+            home: {
+              y: 0
+            }
+          }}
+        >
           <Star position-z={0} position-y={2.2} scale={0.3}/>
           <Float floatIntensity={2} speed={2}>
             <MacBookPro
@@ -73,13 +95,20 @@ export const Experience = () => {
                 {config.home.subtitle}
               </SectionTitle>
             </Center>
-        </group>
+        </motion.group>
         {/* Skills */}
-        <group position-z={SECTIONS_DISTANCE * 1}>
+        <motion.group
+          position-y={-5}
+          variants={{
+            skills: {
+              y: 0
+            }
+          }}
+         position-z={SECTIONS_DISTANCE * 1}>
           <group position-x={-2}>
 
             <SectionTitle position-z={1.5} rotation-y={Math.PI / 6}>Skills</SectionTitle>
-            <BookCase position-z={-2} />
+            {/* <BookCase position-z={-2} /> */}
             <CouchSmall
               scale={0.4}
               position-z={0}
@@ -105,9 +134,16 @@ export const Experience = () => {
               color={"yellow"}
             />
           </mesh>
-        </group>
+        </motion.group>
         {/* Projects */}
-        <group position-z={SECTIONS_DISTANCE * 2}>
+        <motion.group
+          position-y={-5}
+          variants={{
+            projects: {
+              y: 0
+            }
+          }}
+           position-z={SECTIONS_DISTANCE * 2}>
           <group position-x={1}>
             <SectionTitle 
               position-x={-0.5}
@@ -133,9 +169,16 @@ export const Experience = () => {
               </RoundedBox>
             </group>
           </group>
-        </group>
+        </motion.group>
         {/* Contact */}
-        <group position-z={SECTIONS_DISTANCE * 3}>
+        <motion.group
+          position-y={-5}
+          variants={{
+            contact: {
+              y: 0
+            }
+          }}
+          position-z={SECTIONS_DISTANCE * 3}>
           <SectionTitle position-x={-2} position-z={0.6}>
             Contact
           </SectionTitle>
@@ -171,8 +214,10 @@ export const Experience = () => {
               position-z={-0.5}
             />
           </Float>
-        </group>
-      </group>
+        </motion.group>
+      </motion.group>
+
+      
     </>
   );
 };
