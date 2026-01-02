@@ -8,7 +8,7 @@ import { useFrame } from "@react-three/fiber";
 import { Star } from "./Star";
 import { MacBookPro } from "./MacBookPro";
 import { PalmTree } from "./PalmTree";
-// import { BookCase } from "./BookCase";
+import { BookCase } from "./BookCase";
 import { CouchSmall } from "./CouchSmall";
 import { Lamp } from "./Lamp"
 import { Monitor } from "./Monitor"
@@ -64,9 +64,8 @@ export const Experience = () => {
 
   return (
     <>
-      <Environment>
-        <Lights />
-      </Environment>
+      <Environment preset="apartment"/>
+      
       <Avatar />
 
       <ContactShadows opacity={0.5} scale={[30, 30]} color="#9c8e66" />
@@ -138,7 +137,7 @@ export const Experience = () => {
           <group position-x={-2}>
 
             <SectionTitle position-z={1.5} rotation-y={Math.PI / 6}>Skills</SectionTitle>
-            {/* <BookCase position-z={-2} /> */}
+            <BookCase position-z={-2} />
             <CouchSmall
               scale={0.4}
               position-z={0}
