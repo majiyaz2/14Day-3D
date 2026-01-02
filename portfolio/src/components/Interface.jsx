@@ -3,6 +3,9 @@ import { useFrame } from "@react-three/fiber";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { config } from "../config";
+import { atom, useAtom } from "jotai"
+
+export const projectAtom = atom(config.projects[0])
 
 export const Interface = () => {
     const scrollData = useScroll();
@@ -10,6 +13,7 @@ export const Interface = () => {
     useFrame(() => {
         SetHasScrolled(scrollData.offset > 0)
     })
+    const [_project, setProject] = useAtom(projectAtom)
 
     return (
         <div className="interface">
@@ -110,6 +114,7 @@ export const Interface = () => {
                     >
                         {config.projects.map((project, idx) => (
                             <motion.div
+                                onMouseEnter={() => setProject(project)}
                                 key={project.name}
                                 className="project"
                                 initial={{

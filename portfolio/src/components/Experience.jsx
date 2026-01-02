@@ -19,6 +19,7 @@ import { Pigeon } from "./Pigeon";
 import * as THREE from "three"
 import { config } from "../config";
 import { Lights } from "../../../staging/src/components/Lights";
+import { MonitorScreen } from "./MonitorScreen";
 
 const SECTIONS_DISTANCE = 10
 
@@ -164,6 +165,11 @@ export const Experience = () => {
                 position-y={1}
                 rotation-y={-Math.PI / 2}
                 position-z={-1}
+              />
+              <MonitorScreen
+                rotation-x={-0.18}
+                position-z={-0.895}
+                position-y={1.74}
               />
               <RoundedBox scale-x={2} position-y={0.5} position-z={-1}>
                 <meshStandardMaterial color={"white"}/>
