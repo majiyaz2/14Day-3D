@@ -18,8 +18,6 @@ import { ParkBench } from "./ParkBench";
 import { Pigeon } from "./Pigeon";
 import * as THREE from "three"
 import { config } from "../config";
-import { Lights } from "../../../staging/src/components/Lights";
-import { MonitorScreen } from "./MonitorScreen";
 import { atom, useSetAtom } from "jotai";
 
 export const sectionAtom = atom(config.sections[0]);
