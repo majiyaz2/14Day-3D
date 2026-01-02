@@ -19,6 +19,7 @@ import { Pigeon } from "./Pigeon";
 import * as THREE from "three"
 import { config } from "../config";
 import { atom, useSetAtom } from "jotai";
+import {MonitorScreen} from "./MonitorScreen"
 
 export const sectionAtom = atom(config.sections[0]);
 
