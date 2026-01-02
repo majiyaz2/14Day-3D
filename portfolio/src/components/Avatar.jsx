@@ -3,7 +3,22 @@ import { useAnimations, useFBX, useGLTF, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber';
 import * as THREE from "three";
 
-export function Avatar(props) {
+
+const remapAnimationTracks = (animation) => {
+  
+  animation.tracks = animation.tracks.filter((track) => {
+    
+    if (/^Armature\.(position|quaternion|scale)$/.test(track.name)) {
+      return false;
+    }
+   
+    track.name = track.name.replace(/^Armature\./, '');
+    return true;
+  });
+  return animation;
+};
+
+export const Avatar = React.memo(function Avatar(props) {
   const { nodes, materials } = useGLTF('/models/693143bd76dccadf3d05ea03.glb')
   const { animations: idleAnimation } = useFBX("/animations/Idle.fbx");
   const { animations: walkingAnimation } = useFBX("/animations/Walking.fbx");
@@ -12,17 +27,23 @@ export function Avatar(props) {
   const scrollData = useScroll()
   const lastScroll = useRef(0)
 
-  idleAnimation[0].name = 'Idle'
-  walkingAnimation[0].name = 'Walking'
-  runningAnimation[0].name = 'Running'
+  // Remap and name animations
+  const idle = remapAnimationTracks(idleAnimation[0]);
+  const walking = remapAnimationTracks(walkingAnimation[0]);
+  const running = remapAnimationTracks(runningAnimation[0]);
+
+  idle.name = 'Idle';
+  walking.name = 'Walking';
+  running.name = 'Running';
 
   const group = useRef()
-  const {actions} = useAnimations(
-    [idleAnimation[0], walkingAnimation[0], runningAnimation[0]],
+  const { actions } = useAnimations(
+    [idle, walking, running],
     group
   )
 
   const [animation, setAnimation] = useState('Idle')
+  const animationRef = useRef(animation)
 
   useEffect(() => {
     actions[animation].reset().fadeIn(0.5).play()
@@ -34,20 +55,29 @@ export function Avatar(props) {
   useFrame(() => {
     const scrollDelta = scrollData.offset - lastScroll.current
     let rotation = 0
+    let newAnimation = animationRef.current
+
     if (Math.abs(scrollDelta) > 0.00001) {
-      if(scrollDelta > 0){
-        setAnimation('Walking')
+      if (scrollDelta > 0) {
+        newAnimation = 'Walking'
         rotation = 0
-      }else{
-        setAnimation('Running')
+      } else {
+        newAnimation = 'Running'
         rotation = Math.PI
       }
-    }else{
-      setAnimation('Idle')
+    } else {
+      newAnimation = 'Idle'
     }
+
+    
+    if (newAnimation !== animationRef.current) {
+      animationRef.current = newAnimation
+      setAnimation(newAnimation)
+    }
+
     group.current.rotation.y = THREE.MathUtils.lerp(
-      group.current.rotation.y, 
-      rotation, 
+      group.current.rotation.y,
+      rotation,
       0.1
     )
     lastScroll.current = scrollData.offset
@@ -114,7 +144,7 @@ export function Avatar(props) {
       />
     </group>
   )
-}
+})
 
 useFBX.preload('/animations/Running.fbx')
 useFBX.preload('/animations/Idle.fbx')
