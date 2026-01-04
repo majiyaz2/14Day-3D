@@ -314,3 +314,59 @@ a {
   transition: width 0.5s ease-in-out;
   border-radius: 4px;
 }
+
+@media (max-width: 990px) {
+  .mobile--section--top{
+    align-items: flex-start;
+  }
+
+  .mobile--section--bottom{
+    align-items: flex-end;
+  }
+
+  .mobile--section--right{
+    justify-content: flex-end;
+  }
+
+  .mobile--section--left{
+    justify-content: flex-start;
+  }
+
+  .skills {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .skill {
+    padding: 0.5rem;
+    min-width: 220px;
+    margin: 0;
+  }
+  
+  .projects {
+    display: flex;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .project {
+    min-width: 220px
+  }
+
+  .contact{
+    width: 100%;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 0.5rem
+  }
+
+  .loading-screen__title {
+    font-size: 2rem
+  }
+}

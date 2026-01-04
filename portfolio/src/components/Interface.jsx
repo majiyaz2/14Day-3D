@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { config } from "../config";
 import { atom, useAtom } from "jotai"
+import {useMobile} from "../hooks/useMobile"
 
 export const projectAtom = atom(config.projects[0])
 
@@ -14,10 +15,12 @@ export const Interface = () => {
         SetHasScrolled(scrollData.offset > 0)
     })
     const [_project, setProject] = useAtom(projectAtom)
+    const {isMobile} = useMobile()
 
     return (
         <div className="interface">
             <div className="sections">
+                {/* HOME */}
                 <section className="section section--bottom">
                     <motion.div
                         className="scroll-down"
@@ -46,7 +49,7 @@ export const Interface = () => {
                     </motion.div>
                 </section>
                 {/* SKILLS */}
-                <section className="section section--right">
+                <section className="section section--right mobile--section--left mobile--section--bottom">
                     <motion.div
                         className="skills"
                         whileInView={"visible"}
@@ -58,6 +61,9 @@ export const Interface = () => {
                                 opacity: 1
                             }
                         }}
+                        viewport={{
+                            margin: isMobile ? "-70% 0px 0px 0px": undefined,  
+                        }}
                     >
                         {config.skills.map((skill, idx) => (
                             <motion.div
@@ -68,6 +74,10 @@ export const Interface = () => {
                                     visible: {
                                         opacity: 1
                                     }
+                                }}
+                                transition={{
+                                    duration: 1,
+                                    delay: isMobile ? 0 :  idx * 0.62
                                 }}
                             >
                                 <div className="skill__label">
@@ -99,7 +109,7 @@ export const Interface = () => {
                     </motion.div>
                 </section>
                 {/* PROJECTS */}
-                <section className="section section--left">
+                <section className="section section--left mobile--section--bottom">
                     <motion.div
                         className="projects"
                         whileInView={"visible"}
@@ -110,6 +120,9 @@ export const Interface = () => {
                             visible: {
                                 opacity: 1
                             }
+                        }}
+                        viewport={{
+                            margin: isMobile ? "-70% 0px 0px 0px": undefined,  
                         }}
                     >
                         {config.projects.map((project, idx) => (
@@ -127,7 +140,7 @@ export const Interface = () => {
                                 }}
                                 transition={{
                                     duration: 1,
-                                    delay: idx * 0.5
+                                    delay: isMobile ? 0 : idx * 0.5
                                 }}
                             >
                                 <a href={project.link} target="_blank">
@@ -147,7 +160,8 @@ export const Interface = () => {
                         ))}
                     </motion.div>
                 </section>
-                <section className="section section--left">
+                {/* CONTACT */}
+                <section className="section section--left mobile--section--bottom">
                     <motion.div
                         className="contact"
                         whileInView={"visible"}
