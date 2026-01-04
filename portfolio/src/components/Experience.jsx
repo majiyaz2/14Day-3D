@@ -20,6 +20,7 @@ import * as THREE from "three"
 import { config } from "../config";
 import { atom, useSetAtom } from "jotai";
 import {MonitorScreen} from "./MonitorScreen"
+import { useMobile } from "../hooks/useMobile";
 
 export const sectionAtom = atom(config.sections[0]);
 
@@ -28,14 +29,24 @@ const SECTIONS_DISTANCE = 10
 export const Experience = () => {
   const sceneContainer = useRef()
   const scrollData = useScroll()
-  // Use useSetAtom to avoid re-renders when atom value changes
+  const { isMobile } = useMobile();
+ 
   const setSection = useSetAtom(sectionAtom);
-  // Local state for animation that doesn't cause issues
+ 
   const [currentSection, setCurrentSection] = useState(config.sections[0]);
   const sectionRef = useRef(currentSection);
 
   useFrame(() => {
-    sceneContainer.current.position.z = -scrollData.offset * SECTIONS_DISTANCE * (scrollData.pages - 1)
+    if(isMobile){
+
+      sceneContainer.current.position.x = -scrollData.offset * SECTIONS_DISTANCE * (scrollData.pages - 1)
+      sceneContainer.current.position.z = 0
+    }else{
+      sceneContainer.current.position.z = -scrollData.offset * SECTIONS_DISTANCE * (scrollData.pages - 1)
+      sceneContainer.current.position.x = 0
+    }
+
+
     const newSection = config.sections[Math.round(scrollData.offset * (scrollData.pages - 1))];
     if (newSection !== sectionRef.current) {
       sectionRef.current = newSection;
@@ -74,7 +85,7 @@ export const Experience = () => {
       </mesh>
 
       <motion.group ref={sceneContainer} animate={currentSection}>
-        {/* Home */}
+        {/* HOME */}
         <motion.group
           position-y={-5}
           variants={{
@@ -126,13 +137,15 @@ export const Experience = () => {
         </motion.group>
         {/* Skills */}
         <motion.group
+          position-x={isMobile ? SECTIONS_DISTANCE : 0}
+          position-z={isMobile ? -4 : SECTIONS_DISTANCE}
           position-y={-5}
           variants={{
             skills: {
               y: 0
             }
           }}
-          position-z={SECTIONS_DISTANCE * 1}>
+          >
           <group position-x={-2}>
 
             <SectionTitle position-z={1.5} rotation-y={Math.PI / 6}>Skills</SectionTitle>
@@ -165,13 +178,15 @@ export const Experience = () => {
         </motion.group>
         {/* Projects */}
         <motion.group
+          position-x={isMobile ? SECTIONS_DISTANCE*2 : 0}
           position-y={-5}
+          position-z={isMobile ? -3 : SECTIONS_DISTANCE * 2}
           variants={{
             projects: {
               y: 0
             }
           }}
-          position-z={SECTIONS_DISTANCE * 2}>
+          >
           <group position-x={1}>
             <SectionTitle
               position-x={-0.5}
@@ -205,13 +220,15 @@ export const Experience = () => {
         </motion.group>
         {/* Contact */}
         <motion.group
+          position-x={isMobile ? SECTIONS_DISTANCE*3 : 0}
           position-y={-5}
+          position-z={isMobile ? -4 : SECTIONS_DISTANCE * 3}
           variants={{
             contact: {
               y: 0
             }
           }}
-          position-z={SECTIONS_DISTANCE * 3}>
+        >
           <SectionTitle position-x={-2} position-z={0.6}>
             Contact
           </SectionTitle>

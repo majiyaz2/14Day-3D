@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAnimations, useFBX, useGLTF, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber';
 import * as THREE from "three";
+import { useMobile } from '../hooks/useMobile';
 
 
 const remapAnimationTracks = (animation) => {
@@ -26,6 +27,8 @@ export const Avatar = React.memo(function Avatar(props) {
 
   const scrollData = useScroll()
   const lastScroll = useRef(0)
+
+  const {isMobile} = useMobile();
 
   // Remap and name animations
   const idle = remapAnimationTracks(idleAnimation[0]);
@@ -60,10 +63,10 @@ export const Avatar = React.memo(function Avatar(props) {
     if (Math.abs(scrollDelta) > 0.00001) {
       if (scrollDelta > 0) {
         newAnimation = 'Walking'
-        rotation = 0
+        rotation = isMobile ? Math.PI / 2 : 0
       } else {
         newAnimation = 'Running'
-        rotation = Math.PI
+        rotation =isMobile ? -Math.PI / 2 :  Math.PI
       }
     } else {
       newAnimation = 'Idle'
