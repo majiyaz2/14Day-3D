@@ -63,7 +63,7 @@ export const Experience = () => {
 
   return (
     <>
-      <Environment preset="apartment"/>
+      <Environment preset="sunset"/>
       
       <Avatar />
 
