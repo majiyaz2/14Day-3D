@@ -1,30 +1,35 @@
 export const config = {
-    sections: ["home", "skills", "projects", "contact"],
-    home: {
-        title: "Andile",
-        subtitle: "Mhlongo",
+  title: "Andile Mhlongo",
+  loading: {
+    title: "Andile Mhlongo",
+    subtitle: "Full Stack Developer",
+  },
+  sections: ["home", "skills", "projects", "contact"],
+  home: {
+    title: "Andile",
+    subtitle: "Mhlongo",
+  },
+  contact: {
+    mail: "majiyaz2@gmail.com"
+  },
+  skills: [
+    {
+      name: "React",
+      icon: "icons/react-native.png",
+      level: 80,
     },
-    contact: {
-        mail: "majiyaz2@gmail.com"
+    {
+      name: "JavaScript",
+      icon: "icons/javascript.png",
+      level: 80,
     },
-    skills: [
-        {
-            name: "React",
-            icon: "icons/react-native.png",
-            level: 80,
-        },
-        {
-            name: "JavaScript",
-            icon: "icons/javascript.png",
-            level: 80,
-        },
-        {
-            name: "Three.js",
-            icon: "icons/threejs.png",
-            level: 70,
-        },
-    ],
-    projects: [
+    {
+      name: "Three.js",
+      icon: "icons/threejs.png",
+      level: 70,
+    },
+  ],
+  projects: [
     {
       name: "Pictometer",
       description: "A generative AI image creation studio with editing capabilities",
