@@ -220,35 +220,82 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 2.5rem;
   position: fixed;
-  top: 0;
-  left: 4rem;
-  right: 4rem;
-  background: #f5f3ef8a;
-  backdrop-filter: blur(8px);
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 4rem);
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  transition: all 0.3s ease;
 }
 
-.menu__logo {
-  height: 42px;
-  width: 120px;
-  object-fit: cover;
+.menu:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu__logo-container {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.menu__logo-container:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.menu__logo-svg {
+  width: 100%;
+  height: 100%;
 }
 
 .menu__buttons {
   display: flex;
-  gap: 1rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
 .menu__button {
-  font-weight: bold;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-color);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  position: relative;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.menu__button::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+  transition: width 0.3s ease;
+  border-radius: 2px;
 }
 
 .menu__button:hover {
-  color: var(--primary-color);
-  cursor: pointer;
+  opacity: 1;
+  color: #6366f1;
+}
+
+.menu__button:hover::after {
+  width: 100%;
 }
 
 /* LOADING SCREEN */
@@ -535,8 +582,25 @@ a {
   }
 
   .menu {
-    flex-direction: column;
-    gap: 0.5rem
+    top: 1rem;
+    padding: 0.5rem 1.5rem;
+    width: calc(100% - 2rem);
+    border-radius: 24px;
+    gap: 0.75rem;
+  }
+
+  .menu__logo-container {
+    width: 32px;
+    height: 32px;
+  }
+
+  .menu__buttons {
+    gap: 1rem;
+  }
+
+  .menu__button {
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
   }
 
   .loading-screen__container {
